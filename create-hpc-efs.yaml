@@ -1,0 +1,32 @@
+AWSTemplateFormatVersion: "2010-09-09" 
+Description: Create EFS to HPC
+Resources:
+  EBS:
+    Type: AWS::EFS::FileSystem
+    Properties:
+      PerformanceMode: generalPurpose
+      FileSystemTags:
+        - Key: AppName
+          Value: HPC
+        - Key: environment
+          Value: prod
+        - Key: company
+          Value: fca
+        - Key: app-id
+          Value: la00396
+        - Key: business-unit
+          Value: engineering
+        - Key: cloud-provider
+          Value: aws
+        - Key: cost-center
+          Value: 1234
+        - Key: ito-provider
+          Value: npo
+        - Key: plataform
+          Value: linux
+        - Key: product
+          Value: nice-dcv
+        - Key: security-group
+          Value: sg-0c2b4ba342059bdf8
+        - Key: distro
+          Value: amazon

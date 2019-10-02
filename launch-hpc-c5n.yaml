@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: "2010-09-09" 
+Description: Launch EC2 instances to HPC Cluster
+Resources:
+  EFA:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      InterfaceType: efa
+      SubnetId: subnet-001fa013064ef361e
+      GroupSet:
+        - sg-0c2b4ba342059bdf8
+
+  HPCInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: c5n.18xlarge
+      ImageId: ami-0831f1e468ed9769a
+      KeyName: keypair-la00396-hpc
+      Monitoring: true
+      CpuOptions: 
+        CoreCount: 36
+        ThreadsPerCore: 1
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          NetworkInterfaceId: !Ref EFA
+      PlacementGroupName: pg-la00396-hpc-cluster01
+      Tags:
+        - Key: AppName
+          Value: HPC
+        - Key: environment
+          Value: prod
+        - Key: company
+          Value: fca
+        - Key: app-id
+          Value: la00396
+        - Key: business-unit
+          Value: engineering
+        - Key: cloud-provider
+          Value: aws
+        - Key: cost-center
+          Value: 1234
+        - Key: ito-provider
+          Value: npo
+        - Key: plataform
+          Value: linux
+        - Key: product
+          Value: hpc
+        - Key: security-group
+          Value: sg-0c2b4ba342059bdf8
+        - Key: distro
+          Value: amazon

@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: "2010-09-09" 
+Description: Launch EC2 instances to HPC
+Resources:
+  ENI:
+    Type: AWS::EC2::NetworkInterface
+    Properties:
+      SubnetId: subnet-001fa013064ef361e
+      GroupSet:
+        - sg-0c2b4ba342059bdf8
+
+  HPCInstance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: p2.xlarge
+      ImageId: ami-03065df12b8f77b02
+      KeyName: keypair-la00396-hpc
+      Monitoring: true
+      NetworkInterfaces:
+        - DeviceIndex: '0'
+          NetworkInterfaceId: !Ref ENI
+      Tags:
+        - Key: AppName
+          Value: HPC
+        - Key: environment
+          Value: prod
+        - Key: company
+          Value: fca
+        - Key: app-id
+          Value: la00396
+        - Key: business-unit
+          Value: engineering
+        - Key: cloud-provider
+          Value: aws
+        - Key: cost-center
+          Value: 1234
+        - Key: ito-provider
+          Value: npo
+        - Key: plataform
+          Value: linux
+        - Key: product
+          Value: nice-dcv
+        - Key: security-group
+          Value: sg-0c2b4ba342059bdf8
+        - Key: distro
+          Value: amazon
